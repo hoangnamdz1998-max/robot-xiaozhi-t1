@@ -44,7 +44,7 @@ void setup() {
     a2dp_sink.set_avrc_metadata_callback(avrc_metadata_callback);
 
     // Tên thiết bị Bluetooth hiển thị trên điện thoại
-    a2dp_sink.start("Robot-AI-Speaker");
+    a2dp_sink.start("Robot-Xiaozhi-T1");
 
     Serial.println("San sang ket noi Bluetooth tu dien thoai!");
 }

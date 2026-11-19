@@ -25,7 +25,7 @@ private:
         snprintf(resp, sizeof(resp),
             "<!DOCTYPE html><html><head><meta charset='utf-8'>"
             "<meta name='viewport' content='width=device-width,initial-scale=1'>"
-            "<title>Cấu Hình Robot Xiaozhi</title>"
+            "<title>Cấu Hình Robot Xiaozhi T1</title>"
             "<style>"
             "body{font-family:system-ui,-apple-system,sans-serif;background:#121826;color:#e2e8f0;padding:20px;max-width:480px;margin:auto}"
             "h2{color:#38bdf8;text-align:center;margin-bottom:8px}"
@@ -42,7 +42,7 @@ private:
             ".btn-save{background:#10b981;width:100%%;padding:12px;font-size:16px}.btn-save:hover{background:#059669}"
             ".badge{background:#0369a1;color:#bae6fd;padding:2px 8px;border-radius:999px;font-size:12px}"
             "</style></head><body>"
-            "<h2>🤖 Robot Dây Đồng Xiaozhi</h2>"
+            "<h2>🤖 Robot Xiaozhi T1</h2>"
             "<div class='card'><h3>⚙️ Tùy Chỉnh Động Cơ (Hàn Dây Ngược)</h3>"
             "<form action='/save' method='POST'>"
             "<div class='row'><label>Đảo chiều Bánh Trái</label><input type='checkbox' name='inv_l' value='1' %s></div>"

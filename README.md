@@ -1,9 +1,9 @@
-# HƯỚNG DẪN DỰ ÁN ROBOT XE DÂY ĐỒNG XIAOZHI AI (ESP32-S3 N16R8)
+# HƯỚNG DẪN DỰ ÁN ROBOT XIAOZHI T1 (ESP32-S3 N16R8)
 
-Dự án này tích hợp trợ lý ảo AI **Xiaozhi (Tiểu Trí)** vào mô hình **Robot Xe Dây Đồng** dùng vi điều khiển **ESP32-S3 (N16R8)**, điều khiển 2 động cơ qua mạch cầu H **DRV8833**, hiển thị biểu cảm qua **OLED SSD1306 / SH1106**, thu âm bằng **INMP441**, phát âm bằng **MAX98357A**, và **đã loại bỏ phần thẻ nhớ MicroSD** theo yêu cầu.
+Dự án này tích hợp trợ lý ảo AI **Xiaozhi (Tiểu Trí)** vào mô hình **Robot Xiaozhi T1** dùng vi điều khiển **ESP32-S3 (N16R8)**, điều khiển 2 động cơ qua mạch cầu H **DRV8833**, hiển thị biểu cảm qua **OLED SSD1306 / SH1106**, thu âm bằng **INMP441**, phát âm bằng **MAX98357A**, và **đã loại bỏ phần thẻ nhớ MicroSD** theo yêu cầu.
 
 Repository GitHub chính thức của bạn:
-👉 **https://github.com/hoangnamdz1998-max/robot-daydong-xiaozhi**
+👉 **https://github.com/hoangnamdz1998-max/robot-xiaozhi-t1**
 
 ---
 
@@ -89,8 +89,8 @@ Hệ thống tích hợp sẵn một **Web Server cấu hình nội bộ** (ch�
 
 Khi bạn sang máy tính khác, chỉ cần mở Terminal/Command Prompt và chạy:
 ```bash
-git clone https://github.com/hoangnamdz1998-max/robot-daydong-xiaozhi.git
-cd robot-daydong-xiaozhi
+git clone https://github.com/hoangnamdz1998-max/robot-xiaozhi-t1.git
+cd robot-xiaozhi-t1
 ```
 Toàn bộ mã nguồn Xiaozhi, cấu hình board `robot-daydong-s3`, web config đảo chiều motor, và code soundcard bluetooth đều có sẵn đầy đủ.
 
@@ -120,4 +120,4 @@ idf.py -p COMx flash monitor
 Mã nguồn Arduino hoàn chỉnh:
 [esp32_bluetooth_soundcard.ino](file:///d:/HNam/CODE/robot%20T1/esp32_bluetooth_soundcard/esp32_bluetooth_soundcard.ino)
 * Mở bằng **Arduino IDE**, nạp vào bo ESP32 thường.
-* Robot sẽ xuất hiện dưới tên Bluetooth: **`Robot-AI-Speaker`**.
+* Robot sẽ xuất hiện dưới tên Bluetooth: **`Robot-Xiaozhi-T1`**.
