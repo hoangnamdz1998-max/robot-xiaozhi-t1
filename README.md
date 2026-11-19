@@ -1,6 +1,9 @@
 # HƯỚNG DẪN DỰ ÁN ROBOT XE DÂY ĐỒNG XIAOZHI AI (ESP32-S3 N16R8)
 
-Dự án này tích hợp trợ lý ảo AI **Xiaozhi (Tiểu Trí)** vào mô hình **Robot Xe Dây Đồng** dùng vi điều khiển **ESP32-S3 (N16R8)**, điều khiển 2 động cơ qua mạch cầu H **DRV8833**, hiển thị biểu cảm qua **OLED SSD1306**, thu âm bằng **INMP441**, phát âm bằng **MAX98357A**, và **đã loại bỏ phần thẻ nhớ MicroSD** theo yêu cầu.
+Dự án này tích hợp trợ lý ảo AI **Xiaozhi (Tiểu Trí)** vào mô hình **Robot Xe Dây Đồng** dùng vi điều khiển **ESP32-S3 (N16R8)**, điều khiển 2 động cơ qua mạch cầu H **DRV8833**, hiển thị biểu cảm qua **OLED SSD1306 / SH1106**, thu âm bằng **INMP441**, phát âm bằng **MAX98357A**, và **đã loại bỏ phần thẻ nhớ MicroSD** theo yêu cầu.
+
+Repository GitHub chính thức của bạn:
+👉 **https://github.com/hoangnamdz1998-max/robot-daydong-xiaozhi**
 
 ---
 
@@ -22,7 +25,7 @@ Dự án này tích hợp trợ lý ảo AI **Xiaozhi (Tiểu Trí)** vào mô h
 ### B. Màn hình OLED SSD1306 (128x64 I2C) & Cảm biến TOF
 | Ngoại vi | Chân Module | Chân ESP32-S3 | Chú thích |
 |---|---|---|---|
-| **OLED SSD1306** | **SDA** | **GPIO 41** | I2C Data |
+| **OLED SSD1306 / SH1106** | **SDA** | **GPIO 41** | I2C Data |
 | | **SCL** | **GPIO 42** | I2C Clock |
 | | **VCC / GND** | **3V3 / GND** | Nguồn 3.3V |
 | **Cảm biến TOF** | **SDA / SCL** | **GPIO 41 / 42** | Nối song song chung bus I2C với OLED |
@@ -44,9 +47,27 @@ Dự án này tích hợp trợ lý ảo AI **Xiaozhi (Tiểu Trí)** vào mô h
 
 ---
 
-## 2. DANH SÁCH LỆNH GIỌNG NÓI ĐIỀU KHIỂN ROBOT (MCP TOOLS)
+## 2. TRANG WEB CẤU HÌNH ĐẢO CHIỀU ĐỘNG CƠ & CHỌN MÀN HÌNH
 
-Nhờ tích hợp công cụ **Model Context Protocol (MCP)** trong file [motor_controller.h](file:///d:/HNam/CODE/robot%20T1/xiaozhi-esp32_vietnam/main/boards/robot-daydong-s3/motor_controller.h), khi bạn trò chuyện với Xiaozhi, AI sẽ tự động phân tích và kích hoạt động cơ:
+Hệ thống tích hợp sẵn một **Web Server cấu hình nội bộ** (chạy tại cổng `8080`):
+* Khi robot kết nối Wi-Fi, mở trình duyệt điện thoại hoặc máy tính truy cập:
+  `http://<IP_ROBOT>:8080/`
+* **Tính năng:**
+  1. **Đảo chiều Bánh Trái:** Tích chọn nếu lỡ hàn dây motor trái bị ngược chiều (chạy lùi thay vì tiến).
+  2. **Đảo chiều Bánh Phải:** Tích chọn nếu lỡ hàn dây motor phải bị ngược chiều.
+  3. **Đổi vị trí Bánh Trái <-> Phải:** Khắc phục trường hợp hàn nhầm kênh động cơ trái phải.
+  4. **Chọn loại màn hình OLED:** Chọn `0.96 inch (SSD1306)` hoặc `1.3 inch (SH1106 / offset 2px)`.
+  5. **Bàn phím Test động cơ trực tiếp:** Bấm [Tiến], [Lùi], [Cua Trái], [Cua Phải], [Dừng] để kiểm tra ngay chiều quay của bánh xe trước khi lưu.
+  6. **Lưu cấu hình:** Tự động lưu vĩnh viễn vào bộ nhớ flash NVS và khởi động lại robot.
+
+> Ngoài ra bạn có thể ra lệnh bằng giọng nói:
+> * *"Robot đảo chiều bánh trái"*
+> * *"Robot đảo chiều bánh phải"*
+> * *"Đổi màn hình 1.3 inch"* hoặc *"Đổi màn hình 0.96 inch"*
+
+---
+
+## 3. DANH SÁCH LỆNH GIỌNG NÓI ĐIỀU KHIỂN ROBOT (MCP TOOLS)
 
 | Câu lệnh ví dụ của bạn | Công cụ MCP được gọi | Hành động của Robot |
 |---|---|---|
@@ -58,37 +79,45 @@ Nhờ tích hợp công cụ **Model Context Protocol (MCP)** trong file [motor_
 | *"Nhảy múa đi", "Lắc lư nào"* | `self.robot.dance` | Lắc sang trái phải rồi dừng |
 | *"Bật đèn", "Mở đèn mắt"* | `self.robot.light_on` | Bật LED GPIO 47 |
 | *"Tắt đèn đi"* | `self.robot.light_off` | Tắt LED GPIO 47 |
+| *"Đảo chiều bánh trái"* | `self.robot.invert_left_motor` | Đảo chiều motor trái trong NVS |
+| *"Đảo chiều bánh phải"* | `self.robot.invert_right_motor` | Đảo chiều motor phải trong NVS |
+| *"Đổi màn hình 1.3 inch"* | `self.robot.set_screen_type` | Cấu hình offset SH1106 1.3" |
 
 ---
 
-## 3. CÁCH NẠP NHANH BẰNG WEB (KHÔNG CẦN CÀI MÔI TRƯỜNG BUILD)
-Nếu bạn muốn dùng ngay lập tức:
+## 4. HƯỚNG DẪN CLONE SANG MÁY KHÁC ĐỂ TIẾP TỤC CHỈNH SỬA
+
+Khi bạn sang máy tính khác, chỉ cần mở Terminal/Command Prompt và chạy:
+```bash
+git clone https://github.com/hoangnamdz1998-max/robot-daydong-xiaozhi.git
+cd robot-daydong-xiaozhi
+```
+Toàn bộ mã nguồn Xiaozhi, cấu hình board `robot-daydong-s3`, web config đảo chiều motor, và code soundcard bluetooth đều có sẵn đầy đủ.
+
+---
+
+## 5. CÁCH NẠP NHANH BẰNG WEB (KHÔNG CẦN CÀI MÔI TRƯỜNG BUILD)
+Nếu bạn muốn dùng ngay:
 1. Vào trang web `https://xiaozhi.vn` (mục **Nạp firmware**).
-2. Tìm ô firmware **"Xe dây đồng S3 SUPPER MINI"** (hàng 2 ô thứ 2 trong ảnh bạn chụp).
+2. Tìm ô firmware **"Xe dây đồng S3 SUPPER MINI"** (hàng 2 ô thứ 2).
 3. Cắm cáp Type-C nối máy tính với cổng **USB** của bo ESP32-S3.
 4. Bấm nút **"Nạp FW"** trên trình duyệt (Chrome / Edge), chọn cổng COM của ESP32-S3 và chờ nạp 100%.
-5. Sau khi nạp xong, dùng điện thoại kết nối vào WiFi AP do chip phát ra để cài đặt WiFi nhà bạn.
 
 ---
 
-## 4. CÁCH TỰ BUILD MÃ NGUỒN (NẾU MUỐN TÙY BIẾN SÂU)
-Thư mục board mới đã được tạo sẵn tại:
-`xiaozhi-esp32_vietnam/main/boards/robot-daydong-s3`
-
-Để build bằng ESP-IDF:
+## 6. CÁCH TỰ BUILD MÃ NGUỒN BẰNG ESP-IDF
 ```bash
 cd xiaozhi-esp32_vietnam
 idf.py set-target esp32s3
-idf.py menuconfig   # Chọn Board Type: ROBOT DAY DONG S3
+idf.py menuconfig   # Board type chọn: ROBOT DAY DONG S3
 idf.py build
 idf.py -p COMx flash monitor
 ```
 
 ---
 
-## 5. BO ESP32 PHỤ (SOUNDCARD BLUETOOTH A2DP)
-Mã nguồn Arduino hoàn chỉnh nằm trong thư mục:
+## 7. BO ESP32 PHỤ (SOUNDCARD BLUETOOTH A2DP)
+Mã nguồn Arduino hoàn chỉnh:
 [esp32_bluetooth_soundcard.ino](file:///d:/HNam/CODE/robot%20T1/esp32_bluetooth_soundcard/esp32_bluetooth_soundcard.ino)
-* Mở bằng **Arduino IDE**, cài thư viện `ESP32-A2DP`.
-* Chọn board **ESP32 Dev Module** và nạp vào bo ESP32 thường.
+* Mở bằng **Arduino IDE**, nạp vào bo ESP32 thường.
 * Robot sẽ xuất hiện dưới tên Bluetooth: **`Robot-AI-Speaker`**.
