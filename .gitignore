@@ -1,0 +1,10 @@
+# Build artifacts
+**/build/
+**/managed_components/
+**/sdkconfig.old
+**/.pio/
+**/.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
