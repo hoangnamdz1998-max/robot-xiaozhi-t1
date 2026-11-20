@@ -116,8 +116,17 @@ idf.py -p COMx flash monitor
 
 ---
 
-## 7. BO ESP32 PHỤ (SOUNDCARD BLUETOOTH A2DP)
-Mã nguồn Arduino hoàn chỉnh:
-[esp32_bluetooth_soundcard.ino](file:///d:/HNam/CODE/robot%20T1/esp32_bluetooth_soundcard/esp32_bluetooth_soundcard.ino)
-* Mở bằng **Arduino IDE**, nạp vào bo ESP32 thường.
-* Robot sẽ xuất hiện dưới tên Bluetooth: **`Robot-Xiaozhi-T1`**.
+## 7. BO ESP32 PHỤ: TỰ ĐỘNG PHÁT RA LOA BLUETOOTH NGOÀI (A2DP TRANSMITTER)
+
+Để giải quyết vấn đề loa trên robot quá nhỏ, bo ESP32 thường được lập trình làm **Bộ phát Bluetooth Audio (A2DP Source)**:
+* **Mã nguồn:** [esp32_bluetooth_transmitter.ino](file:///d:/HNam/CODE/robot%20T1/esp32_bluetooth_soundcard/esp32_bluetooth_transmitter.ino)
+* **Nguyên lý:** Nhận toàn bộ âm thanh (tiếng nói AI Xiaozhi + Nhạc Online) từ ESP32-S3 qua I2S ➔ Tự động dò và kết nối không dây với Loa Bluetooth ngoài của bạn (JBL, Sony, Loa kéo, Soundbar...).
+* **Sơ đồ nối dây giữa ESP32-S3 và ESP32 Thường:**
+  * `ESP32-S3 GPIO 15 (BCLK)` ➔ `ESP32 GPIO 26`
+  * `ESP32-S3 GPIO 16 (LRC)`  ➔ `ESP32 GPIO 25`
+  * `ESP32-S3 GPIO 7 (DOUT)`  ➔ `ESP32 GPIO 22`
+  * `GND` nối chung giữa 2 bo mạch!
+* **Cách sử dụng:**
+  1. Mở file trong Arduino IDE, cài thư viện `ESP32-A2DP`.
+  2. Sửa dòng `const char* TARGET_SPEAKER_NAME = "Tên_Loa_Của_Bạn";` thành tên loa Bluetooth của bạn.
+  3. Nạp code vào bo ESP32 thường. Bật loa Bluetooth lên, robot sẽ tự động bắt sóng loa và phát toàn bộ âm thanh ra ngoài cực to và ấm!
